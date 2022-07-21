@@ -4,7 +4,6 @@ import LogIn from './LogIn';
 import SignUp from './SignUp';
 
 const Menu = () => {
-
     return (
         <>
         <BrowserRouter>

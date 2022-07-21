@@ -1,14 +1,37 @@
 import React from 'react';
 import { useState } from 'react';
+import { useSelector} from 'react-redux'
 
 const LogIn = () => {
     const [userName, setUser] = useState('');
     const [password, setPassword] = useState('');
+    const data = useSelector((store) => store.Reducer);
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const temp = data.users.map(item => item.userName);
+        if (temp.includes(userName) && data.users.length !== 0)
+        {
+            var temp2 = data.users.filter(item => (item.userName === userName))
+            if (temp2[0].password === password)
+            {
+                alert("Successful Log In")
+            }
+            else 
+            {
+                alert("Incorrect password");
+            }
+        }
+        else {
+            alert("Please Sign Up");
+        }
+        setUser('');
+        setPassword('');
+    }
     return (
         <>
         <div className="d-flex justify-content-sm-center" style= {{borderStyle: "solid", margin: "10%"}}>
-        <form>
+        <form onSubmit={(event)=> handleSubmit(event)}>
         <h2 style = {{textAlign: "center"}}>Log In</h2>
         <div className="form-group">
             <label htmlFor="username">User Name:</label>

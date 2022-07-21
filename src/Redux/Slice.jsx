@@ -3,7 +3,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 export const SignUpSlice =createSlice({
     name: "Sign Up",
     initialState: {
-        users: []
+        users: JSON.parse(localStorage.getItem('StateDB')) || []
     },
     reducers: {
         Registration: (state, action) => {

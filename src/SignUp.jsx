@@ -6,13 +6,28 @@ import {Registration} from './Redux/Slice'
 const SignUp = () => {
     const [userName, setUser] = useState('');
     const [password, setPassword] = useState('');
-
     const data = useSelector((store) => store.Reducer);
     const dispatch = useDispatch();
     const handleSubmit = async(event) => {
         event.preventDefault();
-        dispatch(Registration({users: [{userName: userName, password: password}]}));
-        alert("You have successfully signed up");
+        if (password.length < 6)
+        {
+            alert("Password is too small");
+        }
+        else {
+            const temp = data.users.map(item => item.userName);
+            if (temp.includes(userName) && data.users.length !== 0)
+            {
+                alert("The User Name Already Already Exists.");
+            }
+            else 
+            {
+                dispatch(Registration({users: [{userName: userName, password: password}]}));
+                alert("You have successfully signed up");
+            }
+        }
+        setUser('');
+        setPassword('');
         // console.log(data);  data is updated but will not show here in console. but if you console log below in html portion,
         // it will work correctly because component is rerendering. The function will run with old value of data because it is 
         // the first render. Value will updtae on next render, since new copy is compared with old copy prior to this. 
