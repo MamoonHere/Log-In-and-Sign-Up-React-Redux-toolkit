@@ -2,10 +2,11 @@ import React from 'react';
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
 import LogIn from './LogIn';
 import SignUp from './SignUp';
-import {LoggedIn} from './Redux/Slice';
+import {LoggedIn} from '../Redux/Slice';
 import AllUsers from './allUsers'
 import { useSelector, useDispatch} from 'react-redux'
 import { toast } from 'react-toastify';
+import Bio from './Bio'
 
 const Menu = () => {
     const data = useSelector((store) => store.Reducer);
@@ -15,6 +16,10 @@ const Menu = () => {
         toast.success('Logged out !', {
             position: toast.POSITION.BOTTOM_CENTER
         });
+    }
+    const currentUser = () => {
+        var x = data.users.filter(item => item.email === data.loggedUser);
+        return x[0].userName;
     }
 
     const conditionalRender = () => {
@@ -44,7 +49,7 @@ const Menu = () => {
             return (
                 <ul className="navbar-nav">
                     <li>
-                        <h3 style = {{color: 'whitesmoke', marginRight:'20px'}}>Welcome {data.loggedUser}</h3>
+                        <h3 style = {{color: 'whitesmoke', marginRight:'20px'}}>Welcome {currentUser()}</h3>
                     </li>
                     <li className="nav-item">
                         <Link to= "/ShowUsers">
@@ -68,6 +73,9 @@ const Menu = () => {
         {conditionalRender()}
         </div>
         </nav>
+        <div>
+            {data.loggedIn === 1? <Bio /> : <></>}
+        </div>
         <Routes>
             <Route exact path='/' element = {<></>}></Route>
             <Route exact path='/login' element={data.loggedIn===0? < LogIn />: <></>}></Route>

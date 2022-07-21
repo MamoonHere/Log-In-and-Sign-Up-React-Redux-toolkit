@@ -9,7 +9,16 @@ export const SignUpSlice =createSlice({
     },
     reducers: {
         Registration: (state, action) => {
-            state.users = state.users.concat({userName: action.payload.users[0].userName,password: action.payload.users[0].password})
+            state.users = state.users.concat(
+                {
+                    userName: action.payload.users[0].userName,
+                    password: action.payload.users[0].password,
+                    firstName:action.payload.users[0].firstName,
+                    lastName: action.payload.users[0].lastName,
+                    email: action.payload.users[0].email,
+                    DOB: action.payload.users[0].DOB
+                }
+                )
         },
         LoggedIn: (state,action) => {
             state.loggedIn = action.payload.loggedIn

@@ -1,4 +1,4 @@
-import Menu from './Menu';
+import Menu from './Components/Menu';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

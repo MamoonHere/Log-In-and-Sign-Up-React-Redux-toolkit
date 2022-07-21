@@ -7,7 +7,7 @@ const AllUsers = () => {
 
     return (
         <>
-        <h3 style= {{textAlign:'center'}}>Following are people currently registered.</h3>
+        <h3 style= {{textAlign:'center', marginTop: "20px"}}>Following are people currently registered.</h3>
         <div>
             {
                 data.users.map((item) => 

@@ -2,28 +2,28 @@ import React from 'react';
 import { useState } from 'react';
 import { useSelector} from 'react-redux';
 import { useDispatch } from 'react-redux'
-import {LoggedIn} from './Redux/Slice';
+import {LoggedIn} from '../Redux/Slice';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const LogIn = () => {
-    const [userName, setUser] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const data = useSelector((store) => store.Reducer);
     const dispatch = useDispatch();
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const temp = data.users.map(item => item.userName);
-        if (temp.includes(userName) && data.users.length !== 0)
+        const temp = data.users.map(item => item.email);
+        if (temp.includes(email) && data.users.length !== 0)
         {
-            var temp2 = data.users.filter(item => (item.userName === userName))
+            var temp2 = data.users.filter(item => (item.email === email))
             if (temp2[0].password === password)
             {
                 toast.success('Successful Log In !', {
                     position: toast.POSITION.BOTTOM_CENTER
                 });
-                dispatch(LoggedIn({loggedIn: 1, loggedUser: userName}));
+                dispatch(LoggedIn({loggedIn: 1, loggedUser: email}));
             }
             else 
             {
@@ -33,9 +33,11 @@ const LogIn = () => {
             }
         }
         else {
-            alert("Please Sign Up");
+            toast.error('Please Sign Up !', {
+                position: toast.POSITION.BOTTOM_CENTER
+            });
         }
-        setUser('');
+        setEmail('');
         setPassword('');
     }
     return (
@@ -44,8 +46,8 @@ const LogIn = () => {
         <form onSubmit={(event)=> handleSubmit(event)}>
         <h2 style = {{textAlign: "center"}}>Log In</h2>
         <div className="form-group">
-            <label htmlFor="username">User Name:</label>
-            <input type="username" className="form-control" placeholder="Enter User Name" id="email" value={userName} onChange={(event)=> {setUser(event.target.value)}}/>
+            <label htmlFor="email">Email:</label>
+            <input type="email" className="form-control" placeholder="Enter Email" value={email} onChange={(event)=> {setEmail(event.target.value)}}/>
         </div>
         <div className="form-group">
             <label htmlFor="pwd">Password:</label>
