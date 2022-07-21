@@ -2,6 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import {Registration} from './Redux/Slice'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
     const [userName, setUser] = useState('');
@@ -12,18 +14,24 @@ const SignUp = () => {
         event.preventDefault();
         if (password.length < 6)
         {
-            alert("Password is too small");
+            toast.error('Password is too small !', {
+                position: toast.POSITION.BOTTOM_CENTER
+            });
         }
         else {
             const temp = data.users.map(item => item.userName);
             if (temp.includes(userName) && data.users.length !== 0)
             {
-                alert("The User Name Already Already Exists.");
+                toast.error('User Name already exists !', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                });
             }
             else 
             {
                 dispatch(Registration({users: [{userName: userName, password: password}]}));
-                alert("You have successfully signed up");
+                toast.success('Sign Up Successful !', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                });
             }
         }
         setUser('');

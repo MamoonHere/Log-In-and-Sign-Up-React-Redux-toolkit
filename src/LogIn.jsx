@@ -1,11 +1,16 @@
 import React from 'react';
 import { useState } from 'react';
-import { useSelector} from 'react-redux'
+import { useSelector} from 'react-redux';
+import { useDispatch } from 'react-redux'
+import {LoggedIn} from './Redux/Slice';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LogIn = () => {
     const [userName, setUser] = useState('');
     const [password, setPassword] = useState('');
     const data = useSelector((store) => store.Reducer);
+    const dispatch = useDispatch();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -15,11 +20,16 @@ const LogIn = () => {
             var temp2 = data.users.filter(item => (item.userName === userName))
             if (temp2[0].password === password)
             {
-                alert("Successful Log In")
+                toast.success('Successful Log In !', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                });
+                dispatch(LoggedIn({loggedIn: 1, loggedUser: userName}));
             }
             else 
             {
-                alert("Incorrect password");
+                toast.error('Incorrect Password !', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                });
             }
         }
         else {
